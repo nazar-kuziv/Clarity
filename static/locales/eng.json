@@ -1,0 +1,7 @@
+{
+  "Exceptions": {
+    "DBSmthWentWrong": "Something went wrong while interacting with the database",
+    "DBUnableToConnect": "Unable to connect to database",
+    "DBUnableToGetData": "Can't retrieve data from database"
+  }
+}

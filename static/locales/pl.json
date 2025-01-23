@@ -1,0 +1,28 @@
+{
+  "WindowTitles": {
+    "Login": "Logowanie",
+    "Error": "Błąd"
+  },
+  "Labels": {
+    "Clarity": "Clarity",
+    "NiceToSeeYou": "Miło Cię widzieć!",
+    "LoginIntoYourAccount": "Zaloguj się na swoje konto",
+    "InputYourEmail": "Wprowadź swój  e-mail",
+    "InputYourPassword": "Wprowadź swoje hasło",
+    "DontHaveAnAccount": "Nie masz konta?",
+    "SignUpNow": "Zarejestruj się teraz",
+    "UnableToLogin": "Nie udało się zalogować\nSprawdź swój adres e-mail i hasło, a następnie spróbuj ponownie"
+  },
+  "Buttons": {
+    "Login": "Zaloguj się"
+  },
+  "Exceptions": {
+    "UnableToGetDataFromServer": "Nie udało się pobrać danych z serwera",
+    "DBSmthWentWrong": "Coś poszło nie tak w czsasie interakcji z bazą danych",
+    "DBUnableToConnect": "Nie udało się połączyć z bazą danych",
+    "DBUnableToGetData": "Nie udało się pobrać danych z bazy danych"
+  },
+  "Errors": {
+    "SomethingWentWrong": "Coś poszło nie tak"
+  }
+}
