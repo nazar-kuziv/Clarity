@@ -7,23 +7,12 @@ from utils.i18n import Translator
 from view.widgets.app_header import AppHeader
 from view.widgets.button_basic import ButtonBasic
 from view.widgets.input_validated_label import InputValidatedLabel
-from view.widgets.label_with_clickable_text import LabelWithClickableText
 
 
 class ScreenLogin(QWidget):
-    def __init__(self):
-        super().__init__()
-        try:
-            self.controller = ControllerLogin(self)
-        except Exception as e:
-            self.show_error(str(e))
-            self.close()
-            self.deleteLater()
-            return
-        self.setObjectName("screen_login")
-        self.setStyleSheet("background-color: #FFF8EA;")
-        self.setFixedSize(620, 920)
-        self.setWindowTitle(Translator.translate('WindowTitles.Login'))
+    def __init__(self, after_login_callback=None, parent=None):
+        super().__init__(parent)
+        self.controller = ControllerLogin(self, after_login_callback)
         self.main_layout = QVBoxLayout()
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(0)
@@ -58,13 +47,12 @@ class ScreenLogin(QWidget):
         self.main_layout.addWidget(login_label, alignment=Qt.AlignTop | Qt.AlignHCenter)
         self.input_mail = InputValidatedLabel(Translator.translate('Labels.InputYourEmail'))
         self.input_mail.setContentsMargins(0, 57, 0, 45)
-        self.input_mail.setFixedSize(448, 172)
-        self.input_mail.setObjectName("input_mail")
+        self.input_mail.setFixedSize(448, 186)
         # noinspection PyUnresolvedReferences
         self.main_layout.addWidget(self.input_mail, alignment=Qt.AlignHCenter)
         self.input_password = InputValidatedLabel(Translator.translate('Labels.InputYourPassword'))
         self.input_password.set_password_mode()
-        self.input_password.setContentsMargins(0, 0, 0, 57)
+        self.input_password.setContentsMargins(0, 0, 0, 43)
         self.input_password.setFixedSize(448, 127)
         #  noinspection PyUnresolvedReferences
         self.main_layout.addWidget(self.input_password, alignment=Qt.AlignHCenter)
@@ -86,28 +74,9 @@ class ScreenLogin(QWidget):
         btn_login = ButtonBasic(Translator.translate('Buttons.Login'))
         btn_login.clicked.connect(self.controller.login)
         btn_login.setFixedSize(394, 60)
-        btn_login.setContentsMargins(0, 0, 0, 38)
+        btn_login.setContentsMargins(0, 0, 0, 45)
         # noinspection PyUnresolvedReferences
         self.main_layout.addWidget(btn_login, alignment=Qt.AlignHCenter)
-        self.label_sign_up = LabelWithClickableText(Translator.translate('Labels.DontHaveAnAccount'),
-                                                    Translator.translate('Labels.SignUpNow'), lambda: print('test'))
-        self.label_sign_up.set_base_text_style("""
-            QLabel {
-                font-family: Outfit;
-                color: #222222;
-                font-size: 16px;
-            }
-        """)
-        self.label_sign_up.set_clickable_text_style("""
-            QLabel {
-                font-family: Outfit;
-                font-weight: bold;
-                font-size: 16px;
-            }
-        """)
-        self.label_sign_up.setContentsMargins(0, 38, 0, 0)
-        # noinspection PyUnresolvedReferences
-        self.main_layout.addWidget(self.label_sign_up, alignment=Qt.AlignHCenter)
         enter_for_login = QShortcut(QKeySequence("Return"), self)
         enter_for_login.activated.connect(self.controller.login)
         self.main_layout.addStretch()

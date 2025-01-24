@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import re
-
 from typing import TYPE_CHECKING
 
 import bcrypt
@@ -16,8 +15,9 @@ if TYPE_CHECKING:
 
 
 class ControllerLogin:
-    def __init__(self, view: ScreenLogin):
+    def __init__(self, view: ScreenLogin, after_login_callback=None):
         self.view = view
+        self.after_login_callback = after_login_callback
         self.db = DBConnection()
 
     def login(self):
@@ -27,7 +27,7 @@ class ControllerLogin:
                 self.view.set_valid_label(False)
                 return
             if self._login_user(self.view.get_mail(), self.view.get_password()):
-                self.view.close()
+                self.after_login_callback()
             else:
                 self.view.set_valid_mail(False)
                 self.view.set_valid_password(False)

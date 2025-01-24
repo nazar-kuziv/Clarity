@@ -1,7 +1,8 @@
 {
   "WindowTitles": {
     "Login": "Logowanie",
-    "Error": "Błąd"
+    "Error": "Błąd",
+    "Registration": "Rejestracja"
   },
   "Labels": {
     "Clarity": "Clarity",
@@ -9,20 +10,35 @@
     "LoginIntoYourAccount": "Zaloguj się na swoje konto",
     "InputYourEmail": "Wprowadź swój  e-mail",
     "InputYourPassword": "Wprowadź swoje hasło",
+    "InputYourName": "Wprowadź swoje imię",
+    "InputYourLastName": "Wprowadź swoje nazwisko",
+    "EnterPasswordAgain": "Wprowadź hasło ponownie",
     "DontHaveAnAccount": "Nie masz konta?",
     "SignUpNow": "Zarejestruj się teraz",
-    "UnableToLogin": "Nie udało się zalogować\nSprawdź swój adres e-mail i hasło, a następnie spróbuj ponownie"
+    "UnableToLogin": "Nie udało się zalogować\nSprawdź swój adres e-mail i hasło, a następnie spróbuj ponownie",
+    "CreateYourAccount": "Utwórz swoje konto",
+    "HaveAnAccount": "Masz już konto?",
+    "SingIn": "Zaloguj się"
   },
   "Buttons": {
-    "Login": "Zaloguj się"
+    "Login": "Zaloguj się",
+    "Register": "Zarejestruj się"
   },
   "Exceptions": {
     "UnableToGetDataFromServer": "Nie udało się pobrać danych z serwera",
     "DBSmthWentWrong": "Coś poszło nie tak w czsasie interakcji z bazą danych",
     "DBUnableToConnect": "Nie udało się połączyć z bazą danych",
-    "DBUnableToGetData": "Nie udało się pobrać danych z bazy danych"
+    "DBUnableToGetData": "Nie udało się pobrać danych z bazy danych",
+    "DBUnableToInsertData": "Nie można wstawić danych do bazy danych",
+    "DBUserWithThisEmailExist": "Użytkownik z tym adresem e-mail już istnieje"
   },
   "Errors": {
-    "SomethingWentWrong": "Coś poszło nie tak"
+    "SomethingWentWrong": "Coś poszło nie tak",
+    "InvalidName": "Nieprawidłowo podane imię",
+    "InvalidLastName": "Nieprawidłowo podane nazwisko",
+    "InvalidMail": "Nieprawidłowo podany adres e-mail",
+    "PasswordsNotMatch": "Hasła nie pasują do siebie",
+    "InvalidPassword": "Zbyt proste hasło, spróbuj użyć co najmniej 8 znaków, w tym\n jednej cyfry i jednej malej litery",
+    "UserWithThisMailExist": "Użytkownik z tym adresem e-mail już istnieje"
   }
 }

@@ -20,6 +20,9 @@ class InputValidatedLabel(QWidget):
         self.label_text.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
         self.main_layout.addWidget(self.label_text)
         self.input = QLineEdit()
+        font = self.input.font()
+        font.setPointSize(16)
+        self.input.setFont(font)
         # noinspection PyUnresolvedReferences
         self.input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.input.setStyleSheet("""
