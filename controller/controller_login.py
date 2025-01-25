@@ -16,27 +16,27 @@ if TYPE_CHECKING:
 
 class ControllerLogin:
     def __init__(self, view: ScreenLogin, after_login_callback=None):
-        self.view = view
-        self.after_login_callback = after_login_callback
-        self.db = DBConnection()
+        self._view = view
+        self._after_login_callback = after_login_callback
+        self._db = DBConnection()
 
     def login(self):
         try:
-            if not self._is_valid_mail(self.view.get_mail()):
-                self.view.set_valid_mail(False)
-                self.view.set_valid_label(False)
+            if not self._is_valid_mail(self._view.get_mail()):
+                self._view.set_valid_mail(False)
+                self._view.set_valid_label(False)
                 return
-            if self._login_user(self.view.get_mail(), self.view.get_password()):
-                self.after_login_callback()
+            if self._login_user(self._view.get_mail(), self._view.get_password()):
+                self._after_login_callback()
             else:
-                self.view.set_valid_mail(False)
-                self.view.set_valid_password(False)
-                self.view.set_valid_label(False)
+                self._view.set_valid_mail(False)
+                self._view.set_valid_password(False)
+                self._view.set_valid_label(False)
         except DBUnableToGetData as e:
-            self.view.show_error(str(e))
+            self._view.show_error(str(e))
         except Exception as e:
             print(e)
-            self.view.show_error(Translator.translate('Errors.SomethingWentWrong'))
+            self._view.show_error(Translator.translate('Errors.SomethingWentWrong'))
 
     @staticmethod
     def _is_valid_mail(mail: str) -> bool:
@@ -44,7 +44,7 @@ class ControllerLogin:
         return bool(re.match(email_regex, mail))
 
     def _login_user(self, mail: str, password: str):
-        db_user = self.db.get_user(mail).data
+        db_user = self._db.get_user(mail).data
         if len(db_user) == 0 or not db_user[0]['password'] or not self._verify_password(
                 db_user[0]['password'], password):
             return False

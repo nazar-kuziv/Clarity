@@ -16,53 +16,53 @@ if TYPE_CHECKING:
 
 class ControllerRegistration:
     def __init__(self, view: ScreenRegistration, after_login_callback=None):
-        self.view = view
-        self.db = DBConnection()
-        self.after_login_callback = after_login_callback
+        self._view = view
+        self._db = DBConnection()
+        self._after_login_callback = after_login_callback
 
     def register(self):
         try:
-            user_name = self.view.get_name()
+            user_name = self._view.get_name()
             if not self._is_valid_name_or_surname(user_name):
-                self.view.set_valid_name(False)
-                self.view.set_valid_label(False, Translator.translate('Errors.InvalidName'))
+                self._view.set_valid_name(False)
+                self._view.set_valid_label(False, Translator.translate('Errors.InvalidName'))
                 return
-            last_name = self.view.get_last_name()
+            last_name = self._view.get_last_name()
             if not self._is_valid_name_or_surname(last_name):
-                self.view.set_valid_last_name(False)
-                self.view.set_valid_label(False, Translator.translate('Errors.InvalidLastName'))
+                self._view.set_valid_last_name(False)
+                self._view.set_valid_label(False, Translator.translate('Errors.InvalidLastName'))
                 return
-            mail = self.view.get_mail()
+            mail = self._view.get_mail()
             if not self._is_valid_mail(mail):
-                self.view.set_valid_mail(False)
-                self.view.set_valid_label(False, Translator.translate('Errors.InvalidMail'))
+                self._view.set_valid_mail(False)
+                self._view.set_valid_label(False, Translator.translate('Errors.InvalidMail'))
                 return
-            password = self.view.get_password()
-            repeat_password = self.view.get_repeat_password()
+            password = self._view.get_password()
+            repeat_password = self._view.get_repeat_password()
             if not password == repeat_password:
-                self.view.set_valid_password(False)
-                self.view.set_valid_label(False, Translator.translate('Errors.PasswordsNotMatch'))
+                self._view.set_valid_password(False)
+                self._view.set_valid_label(False, Translator.translate('Errors.PasswordsNotMatch'))
                 return
-            if not self.is_password_valid(password):
-                self.view.set_valid_password(False)
-                self.view.set_valid_label(False, Translator.translate('Errors.InvalidPassword'))
+            if not self._is_password_valid(password):
+                self._view.set_valid_password(False)
+                self._view.set_valid_label(False, Translator.translate('Errors.InvalidPassword'))
                 return
             password_hash = bcrypt.hashpw(password.strip().encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-            self.db.add_new_user(user_name, last_name, mail, password_hash)
-            self.after_login_callback()
+            self._db.add_new_user(user_name, last_name, mail, password_hash)
+            self._after_login_callback()
         except DBUserWithThisEmailExist:
-            self.view.set_valid_name(True)
-            self.view.set_valid_last_name(True)
-            self.view.set_valid_mail(False)
-            self.view.set_valid_password(True)
-            self.view.set_valid_label(False, Translator.translate('Errors.UserWithThisMailExist'))
+            self._view.set_valid_name(True)
+            self._view.set_valid_last_name(True)
+            self._view.set_valid_mail(False)
+            self._view.set_valid_password(True)
+            self._view.set_valid_label(False, Translator.translate('Errors.UserWithThisMailExist'))
         except DBUnableToInsertData as e:
-            self.view.show_error(str(e))
+            self._view.show_error(str(e))
         except:
-            self.view.show_error(Translator.translate('Errors.SomethingWentWrong'))
+            self._view.show_error(Translator.translate('Errors.SomethingWentWrong'))
 
     @staticmethod
-    def is_password_valid(password: str) -> bool:
+    def _is_password_valid(password: str) -> bool:
         return bool(re.match(r"^(?=.*[a-z])(?=.*[0-9]).{8,}$", password))
 
     @staticmethod

@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QApplication
 from utils.environment import Environment
 from utils.i18n import Translator
 from view.screen_authentification import ScreenAuthentification
+from view.screen_main import ScreenMain
 
 
 def add_fonts():
@@ -13,12 +14,17 @@ def add_fonts():
     QtGui.QFontDatabase.addApplicationFont(Environment.resource_path('static/fonts/Outfit.ttf'))
 
 
-Translator.initialize('pl')
+try:
+    Translator.initialize('pl')
 
-app = QApplication(sys.argv)
-add_fonts()
-app.setWindowIcon(QtGui.QIcon(Environment.resource_path('static/images/logo.png')))
+    app = QApplication(sys.argv)
+    add_fonts()
+    app.setWindowIcon(QtGui.QIcon(Environment.resource_path('static/images/logo.png')))
 
-login_screen = ScreenAuthentification()
-login_screen.show()
-app.exec()
+    # login_screen = ScreenAuthentification()
+    # login_screen.show()
+    login_screen = ScreenMain()
+    login_screen.showMaximized()
+    app.exec()
+except KeyboardInterrupt:
+    exit(0)
