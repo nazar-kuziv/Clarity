@@ -1,17 +1,17 @@
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QIcon, Qt
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QStackedLayout, QSizePolicy, \
-    QGraphicsOpacityEffect
+    QGraphicsOpacityEffect, QMessageBox
 
 from utils.environment import Environment
 from utils.i18n import Translator
 from view.screen_diary import ScreenDiary
+from view.screen_diary_entry import ScreenDiaryEntry
 
 
 class ScreenMain(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self._diary_screen_index = None
         self.setMinimumSize(1024, 576)
         # noinspection PyUnresolvedReferences
         self.setAttribute(Qt.WA_StyledBackground, True)
@@ -128,6 +128,7 @@ class ScreenMain(QWidget):
                 background-color: #815B5B; 
             }
         """)
+        self._add_entry_btn.clicked.connect(self._show_diary_entry_screen)
         buttons_layout.addWidget(self._add_entry_btn)
 
         central_widget = QWidget()
@@ -148,10 +149,28 @@ class ScreenMain(QWidget):
         self._central_widget_layout.setStackingMode(QStackedLayout.StackAll)
         self._main_layout.addWidget(central_widget)
 
-        diary_screen = ScreenDiary(self)
-        diary_screen.top_widget_changed.connect(
+        self._diary_screen = ScreenDiary(self)
+        self._diary_screen.top_widget_changed.connect(
             lambda x: self._change_buttons_state_with_blur(self._share_btn.isEnabled()))
-        self._diary_screen_index = self._central_widget_layout.addWidget(diary_screen)
+        self._central_widget_layout.addWidget(self._diary_screen)
+
+    def _show_diary_entry_screen(self):
+        self._change_buttons_state_with_blur(self._share_btn.isEnabled())
+        self._diary_screen.change_previews_diary_entries_state_with_blur(True)
+        self._screen_diary_entry = ScreenDiaryEntry()
+        # noinspection PyUnresolvedReferences
+        self._screen_diary_entry.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self._screen_diary_entry.destroyed.connect(self._change_current_widget_reload_diaries_previews)
+        diary_entry_screen_index = self._central_widget_layout.addWidget(self._screen_diary_entry)
+        self._central_widget_layout.setCurrentIndex(diary_entry_screen_index)
+
+    def _change_current_widget_reload_diaries_previews(self):
+        self._change_buttons_state_with_blur(self._share_btn.isEnabled())
+        self._diary_screen.change_previews_diary_entries_state_with_blur(False)
+        try:
+            self._diary_screen.reload_diaries_previews()
+        except Exception as e:
+            self.show_error(str(e))
 
     def _change_buttons_state_with_blur(self, disable: bool):
         self._share_btn.setDisabled(disable)
@@ -166,3 +185,7 @@ class ScreenMain(QWidget):
         else:
             # noinspection PyTypeChecker
             self._butons_widget.setGraphicsEffect(None)
+
+    def show_error(self, message):
+        # noinspection PyArgumentList
+        QMessageBox.critical(self, Translator.translate('WindowTitles.Error'), str(message))

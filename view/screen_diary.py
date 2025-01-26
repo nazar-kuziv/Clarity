@@ -65,7 +65,7 @@ class ScreenDiary(QWidget):
         self._main_layout.addWidget(scroll_area)
         self._main_layout.currentChanged.connect(self.top_widget_changed.emit)
         self._main_layout.currentChanged.connect(
-            lambda: self._change_previews_diary_entries_state_with_blur(self._are_previews_diary_entries_enabled()))
+            lambda: self.change_previews_diary_entries_state_with_blur(self._are_previews_diary_entries_enabled()))
         self._show_previews_diary_entries()
 
     def _show_previews_diary_entries(self):
@@ -82,7 +82,7 @@ class ScreenDiary(QWidget):
     def _are_previews_diary_entries_enabled(self):
         return self._content_layout.itemAt(0).widget().isEnabled()
 
-    def _change_previews_diary_entries_state_with_blur(self, disable: bool):
+    def change_previews_diary_entries_state_with_blur(self, disable: bool):
         for i in range(self._content_layout.count()):
             self._content_layout.itemAt(i).widget().setDisabled(disable)
         if disable:
@@ -103,8 +103,19 @@ class ScreenDiary(QWidget):
 
     def _change_current_widget_reload_diaries_previews(self):
         try:
-            self._controller.refresh_diary_entries()
             self._main_layout.setCurrentIndex(0)
+            self.reload_diaries_previews()
+        except DBUnableToGetData as e:
+            self.show_error(str(e))
+        except Exception:
+            self.show_error(Translator.translate('Errors.SomethingWentWrong'))
+
+    def reload_diaries_previews(self):
+        """
+        :raise DBUnableToGetData
+        """
+        try:
+            self._controller.refresh_diary_entries()
             for i in range(self._content_layout.count()):
                 item = self._content_layout.itemAt(i)
                 if item is not None:
@@ -112,10 +123,8 @@ class ScreenDiary(QWidget):
                     if widget:
                         widget.deleteLater()
             self._show_previews_diary_entries()
-        except DBUnableToGetData as e:
-            self.show_error(str(e))
         except Exception:
-            self.show_error(Translator.translate('Errors.SomethingWentWrong'))
+            raise DBUnableToGetData()
 
     def show_error(self, message):
         # noinspection PyArgumentList
