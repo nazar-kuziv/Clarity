@@ -2,7 +2,8 @@
   "WindowTitles": {
     "Login": "Logowanie",
     "Error": "Błąd",
-    "Registration": "Rejestracja"
+    "Registration": "Rejestracja",
+    "MyDiary": "Mój Dziennik"
   },
   "Labels": {
     "Clarity": "Clarity",
@@ -22,7 +23,8 @@
   },
   "Buttons": {
     "Login": "Zaloguj się",
-    "Register": "Zarejestruj się"
+    "Register": "Zarejestruj się",
+    "AddEntry": "Dodaj wpis"
   },
   "Exceptions": {
     "UnableToGetDataFromServer": "Nie udało się pobrać danych z serwera",

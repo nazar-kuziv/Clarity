@@ -1,16 +1,26 @@
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QIcon, Qt
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QStackedLayout, QSizePolicy
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QStackedLayout, QSizePolicy
 
 from utils.environment import Environment
+from utils.i18n import Translator
+from view.screen_diary import ScreenDiary
 
 
 class ScreenMain(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self._diary_screen_index = None
+        self.setMinimumSize(1024, 576)
         # noinspection PyUnresolvedReferences
         self.setAttribute(Qt.WA_StyledBackground, True)
-        self.setStyleSheet('background-color: #FFF8EA;')
+        self.setWindowTitle(Translator.translate('WindowTitles.MyDiary'))
+        self.setObjectName('main_screen')
+        self.setStyleSheet("""
+            #main_screen {
+                background-color: #FFF8EA;
+            }
+        """)
         self._main_layout = QVBoxLayout()
         self._main_layout.setContentsMargins(0, 0, 0, 0)
         self._main_layout.setSpacing(0)
@@ -18,12 +28,14 @@ class ScreenMain(QWidget):
 
         self._butons_widget = QWidget()
         self._butons_widget.setContentsMargins(0, 20, 0, 0)
-        butons_layout = QHBoxLayout(self._butons_widget)
+        buttons_layout = QVBoxLayout(self._butons_widget)
+        small_butons_layout = QHBoxLayout()
+        buttons_layout.addLayout(small_butons_layout)
         self._main_layout.addWidget(self._butons_widget)
-        butons_layout.setContentsMargins(0, 0, 0, 0)
-        butons_layout.setSpacing(0)
+        small_butons_layout.setContentsMargins(0, 0, 0, 0)
+        small_butons_layout.setSpacing(0)
         # noinspection PyUnresolvedReferences
-        butons_layout.setAlignment(Qt.AlignRight)
+        small_butons_layout.setAlignment(Qt.AlignRight)
 
         self._share_btn = QPushButton()
         self._share_btn.setIcon(QIcon(Environment.resource_path('static/images/share.png')))
@@ -46,7 +58,7 @@ class ScreenMain(QWidget):
         	}
         """)
         self._share_btn.clicked.connect(lambda x: print('Share button clicked'))
-        butons_layout.addWidget(self._share_btn)
+        small_butons_layout.addWidget(self._share_btn)
 
         self._stats_btn = QPushButton()
         self._stats_btn.setIcon(QIcon(Environment.resource_path('static/images/analysis.png')))
@@ -69,7 +81,7 @@ class ScreenMain(QWidget):
         	}
         """)
         self._stats_btn.clicked.connect(lambda x: print('Stats button clicked'))
-        butons_layout.addWidget(self._stats_btn)
+        small_butons_layout.addWidget(self._stats_btn)
 
         self._filter_btn = QPushButton()
         self._filter_btn.setIcon(QIcon(Environment.resource_path('static/images/filter.png')))
@@ -92,19 +104,54 @@ class ScreenMain(QWidget):
             }
         """)
         self._filter_btn.clicked.connect(lambda x: print('Filter button clicked'))
-        butons_layout.addWidget(self._filter_btn)
+        small_butons_layout.addWidget(self._filter_btn)
+
+        self._add_entry_btn = QPushButton(f"   {Translator.translate('Buttons.AddEntry')}")
+        self._add_entry_btn.setIcon(QIcon(Environment.resource_path('static/images/edit.png')))
+        self._add_entry_btn.setIconSize(QSize(35, 35))
+        self._add_entry_btn.setMinimumHeight(125)
+        self._add_entry_btn.setStyleSheet("""
+            QPushButton {
+                font-family: Outfit;
+                font-size: 24px;
+                font-weight: bold;
+                background-color: rgba(158, 118, 118, 0.8); 
+                color: #FFFFFF;
+                border-radius: 20px;
+                margin: 25px 220px 60px 220px;
+            }
+            QPushButton:hover {
+                background-color: #9E7676; 
+            }
+            QPushButton:pressed {
+                background-color: #815B5B; 
+            }
+        """)
+        buttons_layout.addWidget(self._add_entry_btn)
 
         central_widget = QWidget()
         # noinspection PyUnresolvedReferences
+        central_widget.setAttribute(Qt.WA_StyledBackground, True)
+        central_widget.setObjectName('central_widget')
+        central_widget.setStyleSheet("""
+            #central_widget {
+                background-color: #FFF8EA;
+            }
+        """)
+        # noinspection PyUnresolvedReferences
         central_widget.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self._central_widget_layout = QStackedLayout(central_widget)
-        self._central_widget_layout.setContentsMargins(0, 0, 0, 0)
+        # self._central_widget_layout.setContentsMargins(0, 0, 0, 0)
         self._central_widget_layout.setSpacing(0)
         # noinspection PyUnresolvedReferences
         self._central_widget_layout.setStackingMode(QStackedLayout.StackAll)
         self._main_layout.addWidget(central_widget)
 
+        diary_screen = ScreenDiary(self)
+        self._diary_screen_index = self._central_widget_layout.addWidget(diary_screen)
+
     def _disable_buttons(self):
         self._share_btn.setDisabled(True)
         self._stats_btn.setDisabled(True)
         self._filter_btn.setDisabled(True)
+        self._add_entry_btn.setDisabled(True)

@@ -43,3 +43,10 @@ class DBConnection(metaclass=DBConnectionMeta):
             if hasattr(e, "code") and e.code == "23505":
                 raise DBUserWithThisEmailExist()
             raise DBUnableToInsertData()
+
+    def get_diary_entries(self, user_id: int):
+        try:
+            return self.client.table("diaries_entries").select("*").eq("user_id", user_id).order("creation_date",
+                                                                                                 desc=True).execute()
+        except:
+            raise DBUnableToGetData()
