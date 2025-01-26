@@ -32,7 +32,9 @@
     "DBUnableToConnect": "Nie udało się połączyć z bazą danych",
     "DBUnableToGetData": "Nie udało się pobrać danych z bazy danych",
     "DBUnableToInsertData": "Nie można wstawić danych do bazy danych",
-    "DBUserWithThisEmailExist": "Użytkownik z tym adresem e-mail już istnieje"
+    "DBUserWithThisEmailExist": "Użytkownik z tym adresem e-mail już istnieje",
+    "UnableGetDate": "Nie udało się pobrać daty",
+    "DBUnableToAlterData": "Nie udało się zmienić danych w bazie danych"
   },
   "Errors": {
     "SomethingWentWrong": "Coś poszło nie tak",

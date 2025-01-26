@@ -34,8 +34,7 @@ class ControllerLogin:
                 self._view.set_valid_label(False)
         except DBUnableToGetData as e:
             self._view.show_error(str(e))
-        except Exception as e:
-            print(e)
+        except Exception:
             self._view.show_error(Translator.translate('Errors.SomethingWentWrong'))
 
     @staticmethod

@@ -5,10 +5,7 @@ from PySide6.QtWidgets import QApplication
 
 from utils.environment import Environment
 from utils.i18n import Translator
-from utils.user_session import UserSession
 from view.screen_authentification import ScreenAuthentification
-from view.screen_main import ScreenMain
-from view.widgets.widget_diary_entry import WidgetDiaryEntry
 
 
 def add_fonts():

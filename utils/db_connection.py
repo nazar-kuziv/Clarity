@@ -2,6 +2,7 @@ from dotenv import dotenv_values
 from supabase import create_client, Client
 
 from utils.environment import Environment
+from utils.exceptions.db_unable_to_alter_data import DBUnableToAlterData
 from utils.exceptions.db_unable_to_connect import DBUnableToConnect
 from utils.exceptions.db_unable_to_get_data import DBUnableToGetData
 from utils.exceptions.db_unable_to_insert_data import DBUnableToInsertData
@@ -50,3 +51,17 @@ class DBConnection(metaclass=DBConnectionMeta):
                                                                                                  desc=True).execute()
         except:
             raise DBUnableToGetData()
+
+    def alter_db_diary_entry(self, diary_entry_id: int, entry_text: str, sentiment: float):
+        try:
+            return self.client.table("diaries_entries").update({"entry_text": entry_text, "sentiment": sentiment}).eq(
+                "id", diary_entry_id).execute()
+        except:
+            raise DBUnableToAlterData()
+
+    def add_new_diary_entry(self, user_id: int, entry_text: str, sentiment: float, date: str):
+        try:
+            return self.client.table("diaries_entries").insert(
+                {"user_id": user_id, "entry_text": entry_text, "sentiment": sentiment, "creation_date": date}).execute()
+        except:
+            raise DBUnableToInsertData()

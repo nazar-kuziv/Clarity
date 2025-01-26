@@ -1,6 +1,7 @@
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QIcon, Qt
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QStackedLayout, QSizePolicy
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QStackedLayout, QSizePolicy, \
+    QGraphicsOpacityEffect
 
 from utils.environment import Environment
 from utils.i18n import Translator
@@ -141,17 +142,27 @@ class ScreenMain(QWidget):
         # noinspection PyUnresolvedReferences
         central_widget.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self._central_widget_layout = QStackedLayout(central_widget)
-        # self._central_widget_layout.setContentsMargins(0, 0, 0, 0)
+        self._central_widget_layout.setContentsMargins(0, 0, 0, 0)
         self._central_widget_layout.setSpacing(0)
         # noinspection PyUnresolvedReferences
         self._central_widget_layout.setStackingMode(QStackedLayout.StackAll)
         self._main_layout.addWidget(central_widget)
 
         diary_screen = ScreenDiary(self)
+        diary_screen.top_widget_changed.connect(
+            lambda x: self._change_buttons_state_with_blur(self._share_btn.isEnabled()))
         self._diary_screen_index = self._central_widget_layout.addWidget(diary_screen)
 
-    def _disable_buttons(self):
-        self._share_btn.setDisabled(True)
-        self._stats_btn.setDisabled(True)
-        self._filter_btn.setDisabled(True)
-        self._add_entry_btn.setDisabled(True)
+    def _change_buttons_state_with_blur(self, disable: bool):
+        self._share_btn.setDisabled(disable)
+        self._stats_btn.setDisabled(disable)
+        self._filter_btn.setDisabled(disable)
+        self._add_entry_btn.setDisabled(disable)
+
+        if disable:
+            opacity_effect = QGraphicsOpacityEffect(self._butons_widget)
+            opacity_effect.setOpacity(0.1)
+            self._butons_widget.setGraphicsEffect(opacity_effect)
+        else:
+            # noinspection PyTypeChecker
+            self._butons_widget.setGraphicsEffect(None)

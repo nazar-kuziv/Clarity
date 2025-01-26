@@ -23,6 +23,12 @@ class ControllerDiary:
     def get_diary_entries(self):
         return self._diary_entries
 
+    def refresh_diary_entries(self):
+        """
+        :raise DBUnableToGetData
+        """
+        self._diary_entries = self._get_diary_entries_from_db()
+
     def _get_diary_entries_from_db(self):
         """
         :raise DBUnableToGetData

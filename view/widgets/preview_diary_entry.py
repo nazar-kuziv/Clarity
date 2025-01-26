@@ -2,7 +2,7 @@ from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
 
 
-class WidgetDiaryEntry(QWidget):
+class PreviewDiaryEntry(QWidget):
     clicked = Signal()
 
     def __init__(self, date: str, text: str, parent=None):
