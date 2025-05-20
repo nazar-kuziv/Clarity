@@ -12,7 +12,7 @@ from view.screen_diary_entry import ScreenDiaryEntry
 class ScreenMain(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setMinimumSize(1024, 576)
+        self.setMinimumSize(1024, 820)
         # noinspection PyUnresolvedReferences
         self.setAttribute(Qt.WA_StyledBackground, True)
         self.setWindowTitle(Translator.translate('WindowTitles.MyDiary'))

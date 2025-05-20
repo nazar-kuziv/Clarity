@@ -30,6 +30,7 @@ class InputValidatedLabel(QWidget):
                 border: 1px solid rgba(34, 34, 34, 0.15);
                 border-radius: 5px;
                 background-color: #FCFDFF;
+                color: #28282B;
             }
         """)
         self.input.textChanged.connect(lambda: self.set_valid_style(True))
@@ -43,6 +44,7 @@ class InputValidatedLabel(QWidget):
                         border: 1px solid rgba(34, 34, 34, 0.15);
                         border-radius: 5px;
                         background-color: #FCFDFF;
+                        color: #28282B;
                     }
             """)
         else:
@@ -51,6 +53,7 @@ class InputValidatedLabel(QWidget):
                         border: 1px solid rgb(170, 74, 68);
                         border-radius: 5px;
                         background-color: rgba(170, 74, 68, 0.5);
+                        color: #28282B;
                     }
             """)
 

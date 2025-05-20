@@ -1,4 +1,8 @@
+torch==2.5.0
 PySide6~=6.8.1.1
 python-dotenv~=1.0.1
+sentencepiece~=0.2.0
 supabase~=2.11.0
 bcrypt~=4.2.1
+fairseq~=0.12.2
+tensorboardX~=2.6.2.2
