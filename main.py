@@ -2,11 +2,10 @@ import logging
 import sys
 
 from PySide6 import QtGui
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QMessageBox
 
 from utils.environment import Environment
 from utils.i18n import Translator
-from utils.sentiment import Sentiment
 from view.screen_authentification import ScreenAuthentification
 
 
@@ -24,15 +23,18 @@ try:
 
     logging.disable(logging.CRITICAL)
 
-    sentiment = Sentiment()
-    sentiment.initialize()
-
     login_screen = ScreenAuthentification()
+
+    try:
+        # sentiment = Sentiment()
+        pass
+    except Exception as e:
+        # noinspection PyArgumentList
+        QMessageBox.critical(None, Translator.translate('WindowTitles.Error'),
+                             Translator.translate('Errors.SentimentModelLoadingError'))
+
     login_screen.show()
-    # us = UserSession()
-    # us.set_user_data(1, '', '', '')
-    # login_screen = ScreenMain()
-    # login_screen.showMaximized()
+
     app.exec()
 except KeyboardInterrupt:
     exit(0)

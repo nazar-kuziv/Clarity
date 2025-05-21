@@ -12,7 +12,8 @@ class ScreenAuthentification(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setFixedSize(620, 920)
-        self.setStyleSheet("background-color: #FFF8EA;")
+        self.setObjectName('ScreenAuthentification')
+        self.setStyleSheet("#ScreenAuthentification{background-color: #FFF8EA;}")
         self.set_login_screen()
 
     def set_login_screen(self):

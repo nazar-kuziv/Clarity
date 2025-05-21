@@ -282,3 +282,7 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
+
+/static/roberta/*
+
+/temp/*

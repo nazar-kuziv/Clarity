@@ -45,6 +45,7 @@
     "InvalidMail": "Nieprawidłowo podany adres e-mail",
     "PasswordsNotMatch": "Hasła nie pasują do siebie",
     "InvalidPassword": "Zbyt proste hasło, spróbuj użyć co najmniej 8 znaków, w tym\n jednej cyfry i jednej malej litery",
-    "UserWithThisMailExist": "Użytkownik z tym adresem e-mail już istnieje"
+    "UserWithThisMailExist": "Użytkownik z tym adresem e-mail już istnieje",
+    "SentimentModelLoadingError": "Nie udało się załadować narzedzia do analizy sentymentu"
   }
 }
