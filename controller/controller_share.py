@@ -11,30 +11,15 @@ if TYPE_CHECKING:
     from view.screen_diary import ScreenDiary
 
 
-class ControllerDiary:
+class ControllerShare:
     def __init__(self, view: ScreenDiary):
-        """
-        :raise DBUnableToGetData
-        """
         self._view = view
         self._db = DBConnection()
-        self._diary_entries = self._get_diary_entries_from_db()
 
-    def get_diary_entries(self):
-        return self._diary_entries
-
-    def refresh_diary_entries(self):
-        """
-        :raise DBUnableToGetData
-        """
-        self._diary_entries = self._get_diary_entries_from_db()
-
-    def _get_diary_entries_from_db(self):
-        """
-        :raise DBUnableToGetData
-        """
+    def get_diary_entries_for_time_period(self, start_date: str, end_date: str) -> list[DiaryEntry]:
         try:
-            data = self._db.get_diary_entries(UserSession().user_id)
+            user_id = UserSession().user_id
+            data = self._db.get_diary_entries_for_time_period(user_id, start_date, end_date)
             return list(map(DiaryEntry, data.data))
         except Exception:
             raise DBUnableToGetData()

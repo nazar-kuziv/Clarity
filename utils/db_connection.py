@@ -65,3 +65,11 @@ class DBConnection(metaclass=DBConnectionMeta):
                 {"user_id": user_id, "entry_text": entry_text, "sentiment": sentiment, "creation_date": date}).execute()
         except:
             raise DBUnableToInsertData()
+
+    def get_diary_entries_for_time_period(self, user_id: int, start_date: str, end_date: str):
+        try:
+            return self.client.table("diaries_entries").select("*").eq("user_id", user_id).gte("creation_date",
+                                                                                               start_date).lte(
+                "creation_date", end_date).order("creation_date", desc=True).execute()
+        except:
+            raise DBUnableToGetData()

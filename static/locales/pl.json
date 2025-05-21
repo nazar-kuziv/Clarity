@@ -36,7 +36,8 @@
     "UnableGetDate": "Nie udało się pobrać daty",
     "DBUnableToAlterData": "Nie udało się zmienić danych w bazie danych",
     "MailUnableToInitService": "Nie udało się połączyć z serwerem poczty",
-    "MailUnableToSend": "Nie udało się wysłać wiadomości"
+    "MailUnableToSend": "Nie udało się wysłać wiadomości",
+    "XlsExportFailed": "Nie udało się wyeksportować danych do pliku XLS"
   },
   "Errors": {
     "SomethingWentWrong": "Coś poszło nie tak",
@@ -47,5 +48,10 @@
     "InvalidPassword": "Zbyt proste hasło, spróbuj użyć co najmniej 8 znaków, w tym\n jednej cyfry i jednej malej litery",
     "UserWithThisMailExist": "Użytkownik z tym adresem e-mail już istnieje",
     "SentimentModelLoadingError": "Nie udało się załadować narzedzia do analizy sentymentu"
+  },
+  "Entry": {
+    "Content": "Treść",
+    "Sentiment": "Sentyment",
+    "Date": "Data"
   }
 }
