@@ -34,7 +34,9 @@
     "DBUnableToInsertData": "Nie można wstawić danych do bazy danych",
     "DBUserWithThisEmailExist": "Użytkownik z tym adresem e-mail już istnieje",
     "UnableGetDate": "Nie udało się pobrać daty",
-    "DBUnableToAlterData": "Nie udało się zmienić danych w bazie danych"
+    "DBUnableToAlterData": "Nie udało się zmienić danych w bazie danych",
+    "MailUnableToInitService": "Nie udało się połączyć z serwerem poczty",
+    "MailUnableToSend": "Nie udało się wysłać wiadomości"
   },
   "Errors": {
     "SomethingWentWrong": "Coś poszło nie tak",
