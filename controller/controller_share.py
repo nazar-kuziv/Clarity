@@ -8,11 +8,11 @@ from utils.exceptions.db_unable_to_get_data import DBUnableToGetData
 from utils.user_session import UserSession
 
 if TYPE_CHECKING:
-    from view.screen_diary import ScreenDiary
+    from view.screen_share import ScreenShare
 
 
 class ControllerShare:
-    def __init__(self, view: ScreenDiary):
+    def __init__(self, view: ScreenShare):
         self._view = view
         self._db = DBConnection()
 

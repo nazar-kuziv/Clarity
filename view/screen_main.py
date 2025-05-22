@@ -58,7 +58,6 @@ class ScreenMain(QWidget):
         		background-color: #D4C69F;  
         	}
         """)
-        self._share_btn.clicked.connect(lambda x: print('Share button clicked'))
         small_butons_layout.addWidget(self._share_btn)
 
         self._stats_btn = QPushButton()
@@ -153,6 +152,8 @@ class ScreenMain(QWidget):
         self._diary_screen.top_widget_changed.connect(
             lambda x: self._change_buttons_state_with_blur(self._share_btn.isEnabled()))
         self._central_widget_layout.addWidget(self._diary_screen)
+
+        self._share_btn.clicked.connect(self._diary_screen.show_share_screen)
 
     def _show_diary_entry_screen(self):
         self._change_buttons_state_with_blur(self._share_btn.isEnabled())

@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QApplication, QMessageBox
 
 from utils.environment import Environment
 from utils.i18n import Translator
+from utils.sentiment import Sentiment
 from view.screen_authentification import ScreenAuthentification
 
 
@@ -26,8 +27,7 @@ try:
     login_screen = ScreenAuthentification()
 
     try:
-        # sentiment = Sentiment()
-        pass
+        sentiment = Sentiment()
     except Exception as e:
         # noinspection PyArgumentList
         QMessageBox.critical(None, Translator.translate('WindowTitles.Error'),

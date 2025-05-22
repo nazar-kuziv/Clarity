@@ -9,6 +9,7 @@ from models.diary_entry import DiaryEntry
 from utils.exceptions.db_unable_to_get_data import DBUnableToGetData
 from utils.i18n import Translator
 from view.screen_diary_entry import ScreenDiaryEntry
+from view.screen_share import ScreenShare
 from view.widgets.preview_diary_entry import PreviewDiaryEntry
 
 
@@ -100,6 +101,14 @@ class ScreenDiary(QWidget):
         self.screen_diary_entry.destroyed.connect(self._change_current_widget_reload_diaries_previews)
         diary_entry_screen_index = self._main_layout.addWidget(self.screen_diary_entry)
         self._main_layout.setCurrentIndex(diary_entry_screen_index)
+
+    def show_share_screen(self):
+        self.screen_share = ScreenShare()
+        # noinspection PyUnresolvedReferences
+        self.screen_share.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.screen_share.destroyed.connect(self._change_current_widget_reload_diaries_previews)
+        share_screen_index = self._main_layout.addWidget(self.screen_share)
+        self._main_layout.setCurrentIndex(share_screen_index)
 
     def _change_current_widget_reload_diaries_previews(self):
         try:

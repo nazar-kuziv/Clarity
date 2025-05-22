@@ -19,7 +19,9 @@
     "UnableToLogin": "Nie udało się zalogować\nSprawdź swój adres e-mail i hasło, a następnie spróbuj ponownie",
     "CreateYourAccount": "Utwórz swoje konto",
     "HaveAnAccount": "Masz już konto?",
-    "SingIn": "Zaloguj się"
+    "SingIn": "Zaloguj się",
+    "ShareYourDiary": "Udostępnienie dziennika",
+    "InputEmailForShare": "E-mail osoby do udostępnienia dziennika"
   },
   "Buttons": {
     "Login": "Zaloguj się",
