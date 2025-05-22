@@ -63,3 +63,9 @@ class InputValidatedLabel(QWidget):
     def set_password_mode(self):
         # noinspection PyUnresolvedReferences
         self.input.setEchoMode(QLineEdit.Password)
+
+    def set_label_text_style(self, style: str):
+        self.label_text.setStyleSheet(style)
+
+    def set_placeholder(self, placeholder_text: str):
+        self.input.setPlaceholderText(placeholder_text)

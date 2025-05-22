@@ -285,4 +285,4 @@ pyrightconfig.json
 
 /static/roberta/*
 
-/temp/*
+/tmp/*

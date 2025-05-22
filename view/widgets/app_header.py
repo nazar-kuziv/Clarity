@@ -20,6 +20,7 @@ class AppHeader(QWidget):
             QLabel {
                 font-family: Junge;
                 font-size: 44px;
+                color: #000000;
             }   
         """)
         main_layout.addWidget(app_name)

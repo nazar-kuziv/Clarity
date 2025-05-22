@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from pathlib import Path
 
 import xlsxwriter
 
@@ -21,6 +22,9 @@ class DiaryEntry:
     @staticmethod
     def export_list_to_xls(data: list[DiaryEntry], file_path, hide_content=False):
         try:
+            file_path = Path(file_path)
+            file_path.parent.mkdir(parents=True, exist_ok=True)
+
             workbook = xlsxwriter.Workbook(file_path)
             worksheet = workbook.add_worksheet()
             column_names = [Translator.translate('Entry.Content'),
