@@ -9,6 +9,7 @@ from utils.db_connection import DBConnection
 from utils.exceptions.db_unable_to_insert_data import DBUnableToInsertData
 from utils.exceptions.db_user_with_this_email_exist import DBUserWithThisEmailExist
 from utils.i18n import Translator
+from utils.user_session import UserSession
 
 if TYPE_CHECKING:
     from view.screen_registration import ScreenRegistration
@@ -48,7 +49,13 @@ class ControllerRegistration:
                 self._view.set_valid_label(False, Translator.translate('Errors.InvalidPassword'))
                 return
             password_hash = bcrypt.hashpw(password.strip().encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-            self._db.add_new_user(user_name, last_name, mail, password_hash)
+            self._db.add_new_user(user_name, last_name, mail.lower(), password_hash)
+            db_user = self._db.get_user(mail.lower()).data
+            if len(db_user) == 0:
+                raise DBUnableToInsertData()
+            user_session = UserSession()
+            user_session.set_user_data(db_user[0]['user_id'], db_user[0]['email'], db_user[0]['name'],
+                                       db_user[0]['last_name'])
             self._after_login_callback()
         except DBUserWithThisEmailExist:
             self._view.set_valid_name(True)

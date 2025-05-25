@@ -43,7 +43,7 @@ class ControllerLogin:
         return bool(re.match(email_regex, mail))
 
     def _login_user(self, mail: str, password: str):
-        db_user = self._db.get_user(mail).data
+        db_user = self._db.get_user(mail.lower()).data
         if len(db_user) == 0 or not db_user[0]['password'] or not self._verify_password(
                 db_user[0]['password'], password):
             return False

@@ -67,6 +67,8 @@ class DBConnection(metaclass=DBConnectionMeta):
             raise DBUnableToInsertData()
 
     def get_diary_entries_for_time_period(self, user_id: int, start_date: str, end_date: str):
+        start_date = f'{start_date}T00:00:00.000Z'
+        end_date = f'{end_date}T23:59:59.999Z'
         try:
             return self.client.table("diaries_entries").select("*").eq("user_id", user_id).gte("creation_date",
                                                                                                start_date).lte(
