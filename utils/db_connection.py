@@ -73,3 +73,9 @@ class DBConnection(metaclass=DBConnectionMeta):
                 "creation_date", end_date).order("creation_date", desc=True).execute()
         except:
             raise DBUnableToGetData()
+
+    def delete_diary_entry(self, diary_entry_id: int):
+        try:
+            return self.client.table("diaries_entries").delete().eq("id", diary_entry_id).execute()
+        except:
+            raise DBUnableToAlterData()

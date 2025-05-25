@@ -36,11 +36,11 @@ class ScreenDiaryEntry(QWidget):
         main_widget.setFixedSize(950, 750)
         self._main_layout = QVBoxLayout(main_widget)
         main_widget.setLayout(self._main_layout)
-        date_save_close_layout = QHBoxLayout()
-        self._main_layout.addLayout(date_save_close_layout)
+        date_delete_save_close_layout = QHBoxLayout()
+        self._main_layout.addLayout(date_delete_save_close_layout)
         date_label = QLabel(self._controller.get_creation_date())
         # noinspection PyUnresolvedReferences
-        date_save_close_layout.addWidget(date_label, alignment=Qt.AlignLeft)
+        date_delete_save_close_layout.addWidget(date_label, alignment=Qt.AlignLeft)
         date_label.setStyleSheet("""
             QLabel {
                 color: #FFFFFF;
@@ -49,14 +49,42 @@ class ScreenDiaryEntry(QWidget):
                 font-weight: bold;
             }
         """)
-        date_save_close_layout.addStretch()
+        date_delete_save_close_layout.addStretch()
+
+        if diary_entry:
+            self._delete_btn = QPushButton()
+            self._delete_btn.setFixedSize(50, 50)
+            self._delete_btn.setIconSize(QSize(50, 50))
+            self._delete_btn.setIcon(QPixmap(Environment.resource_path('static/images/delete.png')))
+            self._delete_btn.clicked.connect(self._controller.delete_entry_and_close_view)
+            # noinspection PyUnresolvedReferences
+            date_delete_save_close_layout.addWidget(self._delete_btn, alignment=Qt.AlignRight)
+            self._delete_btn.setStyleSheet("""
+                QPushButton {
+                    border: none;
+                    background-color: transparent;
+                    padding: 0;
+                    outline: none;
+                }
+    
+                QPushButton:hover {
+                    background-color: rgba(0, 0, 0, 40);  
+                    border-radius: 10px; 
+                }
+    
+                QPushButton:pressed {
+                    background-color: rgba(0, 0, 0, 60);  
+                    border-radius: 10px;
+                }
+            """)
+
         self._save_btn = QPushButton()
         self._save_btn.setFixedSize(50, 50)
         self._save_btn.setIconSize(QSize(50, 50))
         self._save_btn.setIcon(QPixmap(Environment.resource_path('static/images/save.png')))
         self._save_btn.clicked.connect(self._controller.save_diary_entry_close_view)
         # noinspection PyUnresolvedReferences
-        date_save_close_layout.addWidget(self._save_btn, alignment=Qt.AlignRight)
+        date_delete_save_close_layout.addWidget(self._save_btn, alignment=Qt.AlignRight)
         self._save_btn.setStyleSheet("""
         	QPushButton {
         		border: none;
@@ -81,7 +109,7 @@ class ScreenDiaryEntry(QWidget):
         close_btn.setIconSize(QSize(50, 50))
         close_btn.setIcon(QPixmap(Environment.resource_path('static/images/close.png')))
         # noinspection PyUnresolvedReferences
-        date_save_close_layout.addWidget(close_btn, alignment=Qt.AlignRight)
+        date_delete_save_close_layout.addWidget(close_btn, alignment=Qt.AlignRight)
         close_btn.setStyleSheet("""
             QPushButton {
                 border: none;

@@ -34,6 +34,15 @@ class ControllerDiaryEntry:
         except Exception as e:
             self._view.show_error(str(e))
 
+    def delete_entry_and_close_view(self):
+        if self._diary_entry:
+            try:
+                self._db.delete_diary_entry(self._diary_entry.id)
+                self._view.deleteLater()
+            except Exception as e:
+                self._view.show_error(str(e))
+        else:
+            self._view.show_error("No diary entry to delete.")
 
     def get_creation_date(self):
         if self._diary_entry:
