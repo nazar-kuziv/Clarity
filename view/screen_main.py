@@ -60,52 +60,6 @@ class ScreenMain(QWidget):
         """)
         small_butons_layout.addWidget(self._share_btn)
 
-        self._stats_btn = QPushButton()
-        self._stats_btn.setIcon(QIcon(Environment.resource_path('static/images/analysis.png')))
-        self._stats_btn.setFixedSize(67, 50)
-        self._stats_btn.setIconSize(QSize(30, 30))
-        self._stats_btn.setStyleSheet("""
-        	QPushButton {
-        		background-color: #ECE3CE;
-        		border-radius: 25px;
-        		margin-right: 17px;
-        		border: 1px solid #D4C69F;
-        	}
-
-        	QPushButton:hover {
-        		background-color: #F2E1A1;  
-        	}
-
-        	QPushButton:pressed {
-        		background-color: #D4C69F;  
-        	}
-        """)
-        self._stats_btn.clicked.connect(lambda x: print('Stats button clicked'))
-        small_butons_layout.addWidget(self._stats_btn)
-
-        self._filter_btn = QPushButton()
-        self._filter_btn.setIcon(QIcon(Environment.resource_path('static/images/filter.png')))
-        self._filter_btn.setFixedSize(78, 50)
-        self._filter_btn.setIconSize(QSize(30, 30))
-        self._filter_btn.setStyleSheet("""
-            QPushButton {
-                background-color: #ECE3CE;
-                border-radius: 25px;
-                margin-right: 28px;
-                border: 1px solid #D4C69F;
-            }
-
-            QPushButton:hover {
-                background-color: #F2E1A1;  
-            }
-
-            QPushButton:pressed {
-                background-color: #D4C69F;  
-            }
-        """)
-        self._filter_btn.clicked.connect(lambda x: print('Filter button clicked'))
-        small_butons_layout.addWidget(self._filter_btn)
-
         self._add_entry_btn = QPushButton(f"   {Translator.translate('Buttons.AddEntry')}")
         self._add_entry_btn.setIcon(QIcon(Environment.resource_path('static/images/edit.png')))
         self._add_entry_btn.setIconSize(QSize(35, 35))
@@ -175,8 +129,6 @@ class ScreenMain(QWidget):
 
     def _change_buttons_state_with_blur(self, disable: bool):
         self._share_btn.setDisabled(disable)
-        self._stats_btn.setDisabled(disable)
-        self._filter_btn.setDisabled(disable)
         self._add_entry_btn.setDisabled(disable)
 
         if disable:
