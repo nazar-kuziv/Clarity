@@ -43,7 +43,8 @@
     "DBUnableToAlterData": "Nie udało się zmienić danych w bazie danych",
     "MailUnableToInitService": "Nie udało się połączyć z serwerem poczty",
     "MailUnableToSend": "Nie udało się wysłać wiadomości",
-    "XlsExportFailed": "Nie udało się wyeksportować danych do pliku XLS"
+    "XlsxExportFailed": "Nie udało się wyeksportować danych do pliku XLS",
+    "HeatmapExportFailed": "Nie udało się utworzyć kalendarza"
   },
   "Errors": {
     "SomethingWentWrong": "Coś poszło nie tak",
@@ -65,5 +66,31 @@
     "Body": "Cześć,\n\n{name} {last_name} udostępnił Ci swój dziennik, {visibility}.\n\nZakres wpisów: od {start_date} do {end_date}.  \nWszystkie dane oraz ich analiza znajdują się w załącznikach.\n\nZ poważaniem,  \nZespół Clarity",
     "WithContent": "z wpisami",
     "WithoutContent": "bez wpisów"
+  },
+  "Heatmap": {
+    "Monday": "Pn",
+    "Tuesday": "Wt",
+    "Wednesday": "Śr",
+    "Thursday": "Cz",
+    "Friday": "Pt",
+    "Saturday": "So",
+    "Sunday": "Nd",
+    "January": "Styczeń",
+    "February": "Luty",
+    "March": "Marzec",
+    "April": "Kwiecień",
+    "May": "Maj",
+    "June": "Czerwiec",
+    "July": "Lipiec",
+    "August": "Sierpień",
+    "September": "Wrzesień",
+    "October": "Październik",
+    "November": "Listopad",
+    "December": "Grudzień",
+    "Positive": "Pozytywny sentyment",
+    "Negative": "Negatywny sentyment",
+    "Neutral": "Neutralny sentyment",
+    "NoData": "Brak danych",
+    "SentimentCalendar": "Kalendarz sentymentu {year}"
   }
 }

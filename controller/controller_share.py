@@ -8,8 +8,9 @@ from models.diary_entry import DiaryEntry
 from utils.db_connection import DBConnection
 from utils.environment import Environment
 from utils.exceptions.db_unable_to_get_data import DBUnableToGetData
+from utils.exceptions.heatmap_export_failed import HeatmapExportFailed
 from utils.exceptions.mail_unable_to_send import MailUnableToSend
-from utils.exceptions.xls_export_failed import XlsExportFailed
+from utils.exceptions.xlsx_export_failed import XlsxExportFailed
 from utils.i18n import Translator
 from utils.mail import MailService
 from utils.user_session import UserSession
@@ -48,38 +49,46 @@ class ControllerShare:
             self._view.set_valid_end_date(False)
             return
         self._view.set_valid_end_date(True)
-        dt_start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
-        dt_end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
-        if dt_start_date > dt_end_date:
+        dt_start_date = datetime.strptime(start_date, "%Y-%m-%d")
+        dt_end_date = datetime.strptime(end_date, "%Y-%m-%d")
+        if dt_start_date.date() > dt_end_date.date():
             self._view.set_valid_start_date(False)
             self._view.set_valid_end_date(False)
             return
         try:
             diary_entries = self._get_diary_entries_for_time_period(start_date, end_date)
-            file_name = f"diary_entries_{datetime.now().strftime('%Y-%m-%d_%H-%M')}.xlsx"
-            file_path = Environment.resource_path(f"tmp/{file_name}")
-            DiaryEntry.export_list_to_xls(diary_entries, file_path, self._view.is_share_without_content())
+            file_name = f"diary_entries_{datetime.now().strftime('%Y-%m-%d_%H-%M')}"
+            xlsx_file_path = Environment.resource_path(f"tmp/{file_name}.xlsx")
+            DiaryEntry.export_list_to_xls(diary_entries, xlsx_file_path, self._view.is_share_without_content())
+            files = [xlsx_file_path]
             usr = UserSession()
             visibility = Translator.translate(
                 'Mail.WithoutContent') if self._view.is_share_without_content() else Translator.translate(
                 'Mail.WithContent')
-            # TODO: add chart here
+            png_file_path = Environment.resource_path(f"tmp/{file_name}.png")
+            files.extend(DiaryEntry.export_list_to_heatmap(diary_entries, dt_start_date, dt_end_date, png_file_path))
             self.mail_service.send_mail_with_attachments(
                 to_email=email,
                 subject=Translator.translate('Mail.Subject').format(name=usr.name, last_name=usr.last_name),
                 body=Translator.translate('Mail.Body').format(name=usr.name, last_name=usr.last_name,
                                                               visibility=visibility, start_date=start_date,
                                                               end_date=end_date),
-                attachments=[file_path]
+                attachments=files
             )
         except DBUnableToGetData as db_error:
             self._view.show_error(str(db_error))
             return
-        except XlsExportFailed as xls_error:
+        except XlsxExportFailed as xls_error:
             self._view.show_error(str(xls_error))
+            return
+        except HeatmapExportFailed as heatmap_error:
+            self._view.show_error(str(heatmap_error))
             return
         except MailUnableToSend as mail_error:
             self._view.show_error(str(mail_error))
+            return
+        except Exception:
+            self._view.show_error(Translator.translate('Errors.SomethingWentWrong'))
             return
         self._view.deleteLater()
 

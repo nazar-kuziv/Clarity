@@ -35,10 +35,6 @@ if __name__ == '__main__':
         logging.disable(logging.CRITICAL)
 
         login_screen = ScreenAuthentification()
-        # us = UserSession()
-        # us.set_user_data(1, '', '', '')
-        # login_screen = ScreenMain()
-        # login_screen.showMaximized()
 
         try:
             sentiment = Sentiment()
