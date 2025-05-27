@@ -62,7 +62,7 @@ class DiaryEntry:
         self.user_id = db_object.get("user_id")
 
     @staticmethod
-    def export_list_to_xls(data: list[DiaryEntry], file_path, hide_content=False):
+    def export_list_to_xlsx(data: list[DiaryEntry], file_path, hide_content=False):
         try:
             file_path = Path(file_path)
             file_path.parent.mkdir(parents=True, exist_ok=True)
@@ -79,8 +79,8 @@ class DiaryEntry:
             for i, obj in enumerate(data):
                 if not hide_content:
                     worksheet.write(i + 1, 0, obj.entry_text)
-                worksheet.write(i + 1, 1, obj.creation_date.strftime("%Y-%m-%d %H:%M") if obj.creation_date else "")
-                worksheet.write(i + 1, 2, obj.sentiment)
+                worksheet.write(i + 1, 1, obj.sentiment)
+                worksheet.write(i + 1, 2, obj.creation_date.strftime("%Y-%m-%d %H:%M") if obj.creation_date else "")
 
             worksheet.autofit()
             workbook.close()

@@ -59,7 +59,7 @@ class ControllerShare:
             diary_entries = self._get_diary_entries_for_time_period(start_date, end_date)
             file_name = f"diary_entries_{datetime.now().strftime('%Y-%m-%d_%H-%M')}"
             xlsx_file_path = Environment.resource_path(f"tmp/{file_name}.xlsx")
-            DiaryEntry.export_list_to_xls(diary_entries, xlsx_file_path, self._view.is_share_without_content())
+            DiaryEntry.export_list_to_xlsx(diary_entries, xlsx_file_path, self._view.is_share_without_content())
             files = [xlsx_file_path]
             usr = UserSession()
             visibility = Translator.translate(
